@@ -11,7 +11,11 @@
 					ref="colorInput"
 				>
 		</div>
-		<div class="gradient-color-picker-input-div" :style="{background: gradient}">
+		<div
+				class="gradient-color-picker-input-div"
+				:style="{background: gradient}"
+				@dblclick="addColor( $event )"
+			>
 			<span
 					class="icon"
 					:style="{'--color': initialColor, '--percent': '0%'}"
@@ -24,6 +28,7 @@
 					:key="i"
 					:style="{'--color': c.color, '--percent': c.percent+'%'}"
 					@click="$refs['colorInput'][i].click( $event )"
+					@contextmenu.prevent="removeColor( i )"
 				>
 			</span>
 			<span
@@ -62,6 +67,22 @@ export default {
 			let gradient = this.allColors.map((c) => `${c.color} ${c.percent}%`).join(', ');
 			gradient = `linear-gradient( 90deg, ${gradient} )`;
 			return gradient;
+		},
+	},
+	methods: {
+		addColor(event) {
+			const rect = event.target.getBoundingClientRect();
+			const x = event.clientX - rect.left; // x position within the element
+			const percent = (100 * x) / rect.width;
+
+			this.colors.push({
+				percent,
+				color: '#000',
+			});
+		},
+		removeColor(index) {
+			this.colors.splice(index, 1);
+			this.$forceUpdate();
 		},
 	},
 };
