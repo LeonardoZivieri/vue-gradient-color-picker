@@ -64,10 +64,12 @@ export default {
 			allColors.push({ percent: 0, color: this.initialColor });
 			allColors = allColors.concat(this.colors);
 			allColors.push({ percent: 100, color: this.finalColor });
-			return allColors;
+			return allColors.sort((c1, c2) => c1.percent - c2.percent);
 		},
 		gradient() {
-			let gradient = this.allColors.map((c) => `${c.color} ${c.percent}%`).join(', ');
+			let gradient = this.allColors;
+			gradient = gradient.map((c) => `${c.color} ${c.percent}%`);
+			gradient = gradient.join(', ');
 			gradient = `linear-gradient( 90deg, ${gradient} )`;
 			return gradient;
 		},
