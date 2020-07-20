@@ -20,6 +20,7 @@
 					class="icon"
 					:style="{'--color': initialColor, '--percent': '0%'}"
 					@click.stop="openColorInput( $event, $refs['initialColorInput'] )"
+					@dblclick.stop=""
 				>
 			</span>
 			<span
@@ -28,6 +29,7 @@
 					:key="i"
 					:style="{'--color': c.color, '--percent': c.percent+'%'}"
 					@click.stop="openColorInput( $event, $refs['colorInput'][i] )"
+					@dblclick.stop=""
 					@contextmenu.prevent="removeColor( i )"
 				>
 			</span>
@@ -35,6 +37,7 @@
 					class="icon"
 					:style="{'--color': finalColor, '--percent': '100%'}"
 					@click.stop="openColorInput( $event, $refs['finalColorInput'] )"
+					@dblclick.stop=""
 				>
 			</span>
 		</div>
