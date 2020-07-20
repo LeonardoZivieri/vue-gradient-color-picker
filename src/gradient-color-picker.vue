@@ -13,6 +13,7 @@
 		</div>
 		<div
 				class="gradient-color-picker-input-div"
+				ref="gradient-color-picker-input-div"
 				:style="{background: gradient}"
 				@dblclick="addColor( $event )"
 			>
@@ -76,7 +77,7 @@ export default {
 	},
 	methods: {
 		addColor(event) {
-			const rect = event.target.getBoundingClientRect();
+			const rect = this.$refs['gradient-color-picker-input-div'].getBoundingClientRect();
 			const x = event.clientX - rect.left; // x position within the element
 			const percent = (100 * x) / rect.width;
 
