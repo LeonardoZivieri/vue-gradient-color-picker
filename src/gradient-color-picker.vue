@@ -172,16 +172,18 @@ export default {
 		}
 
 		&::after {
-			border: solid black;
-			border-width: 0 2px 2px 0;
+			background-color: #e3e3e3;
+			border: solid gray;
+			border-width: 0 1px 1px 0;
 			display: inline-block;
 			padding: 2px;
-			top: -5px;
-			left: 2px;
+			top: -4px;
+			left: 2.5px;
 			width: 2px;
 			height: 2px;
 			transform: rotate(-135deg);
 			-webkit-transform: rotate(-135deg);
+			z-index: -1;
 		}
 
 		&::before {
