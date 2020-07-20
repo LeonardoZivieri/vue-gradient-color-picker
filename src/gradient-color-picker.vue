@@ -1,15 +1,15 @@
 <template lang="html">
 	<div>
-		<div style="display: none">
-			<input type="color" v-model="initialColor" ref="initialColorInput">
-			<input type="color" v-model="finalColor" ref="finalColorInput">
-			<input
-					type="color"
-					v-for="(c, i) of colors"
-					:key="i"
-					v-model="colors[i].color"
-					ref="colorInput"
-				>
+		<div class="color-inputs">
+			<div class="color-input">
+				<input type="color" v-model="initialColor" ref="initialColorInput">
+			</div>
+			<div class="color-input">
+				<input type="color" v-model="finalColor" ref="finalColorInput">
+			</div>
+			<div class="color-input" v-for="(c, i) of colors" :key="i">
+				<input type="color" v-model="colors[i].color" ref="colorInput">
+			</div>
 		</div>
 		<div
 				class="gradient-color-picker-input-div"
@@ -19,7 +19,7 @@
 			<span
 					class="icon"
 					:style="{'--color': initialColor, '--percent': '0%'}"
-					@click="$refs['initialColorInput'].click( $event )"
+					@click.stop="openColorInput( $event, $refs['initialColorInput'] )"
 				>
 			</span>
 			<span
@@ -27,14 +27,14 @@
 					v-for="(c, i) of colors"
 					:key="i"
 					:style="{'--color': c.color, '--percent': c.percent+'%'}"
-					@click="$refs['colorInput'][i].click( $event )"
+					@click.stop="openColorInput( $event, $refs['colorInput'][i] )"
 					@contextmenu.prevent="removeColor( i )"
 				>
 			</span>
 			<span
 					class="icon"
 					:style="{'--color': finalColor, '--percent': '100%'}"
-					@click="$refs['finalColorInput'].click( $event )"
+					@click.stop="openColorInput( $event, $refs['finalColorInput'] )"
 				>
 			</span>
 		</div>
@@ -84,11 +84,28 @@ export default {
 			this.colors.splice(index, 1);
 			this.$forceUpdate();
 		},
+		openColorInput(event, colorInput) {
+			const colorInputStyles = colorInput.style;
+			colorInputStyles.left = `calc(${event.x}px - 5vw)`;
+			colorInputStyles.top = `calc(${event.y}px - 5vh)`;
+			setTimeout(() => colorInput.click(event));
+		},
 	},
 };
 </script>
 
 <style lang="scss" scoped>
+.color-inputs {
+	.color-input {
+		position: absolute;
+		height: 0;
+		width: 0;
+		overflow: hidden;
+	}
+	input {
+		position: absolute;
+	}
+}
 .gradient-color-picker-input-div {
 	height: 13px;
 	position: relative;
