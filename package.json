@@ -1,0 +1,64 @@
+{
+	"name": "vue-gradient-color-picker",
+	"description": "A gradient color picker for VueJs",
+	"author": "Leonardo Zivieri",
+	"license": "MIT",
+	"version": "0.0.0",
+	"keywords": [
+		"vue",
+		"sfc",
+		"cli",
+		"generator",
+		"template",
+		"compiler",
+		"rollup"
+	],
+	"main": "dist/gradient-color-picker.umd.js",
+	"module": "dist/gradient-color-picker.esm.js",
+	"unpkg": "dist/gradient-color-picker.min.js",
+	"browser": {
+		"./sfc": "src/gradient-color-picker.vue"
+	},
+	"homepage": "https://github.com/LeonardoZivieri/vue-gradient-color-picker",
+	"files": [
+		"templates/*",
+		"src/*"
+	],
+	"scripts": {
+		"serve": "vue serve --open src/gradient-color-picker.vue",
+		"build": "npm run build:umd & npm run build:es & npm run build:unpkg",
+		"build:umd": "rollup --config build/rollup.config.js --format umd --file dist/gradient-color-picker.umd.js",
+		"build:es": "rollup --config build/rollup.config.js --format es --file dist/gradient-color-picker.esm.js",
+		"build:unpkg": "rollup --config build/rollup.config.js --format iife --file dist/gradient-color-picker.min.js"
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "npm run lint",
+			"pre-push": "npm audit"
+		}
+	},
+	"dependencies": {
+		"babel-eslint": "^10.1.0",
+		"chalk": "^4.0.0",
+		"ejs": "^3.1.2",
+		"prompts": "^2.3.2",
+		"sass-loader": "^9.0.2",
+		"update-check": "^1.5.4"
+	},
+	"devDependencies": {
+		"@rollup/plugin-buble": "^0.21.3",
+		"@rollup/plugin-commonjs": "^11.1.0",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb-base": "^14.1.0",
+		"eslint-plugin-import": "^2.20.2",
+		"eslint-plugin-vue": "^6.2.2",
+		"husky": "^4.2.5",
+		"rollup": "^1.17.0",
+		"rollup-plugin-vue": "^5.0.1",
+		"vue": "^2.6.10",
+		"vue-template-compiler": "^2.6.10"
+	},
+	"engines": {
+		"node": ">=8"
+	}
+}
