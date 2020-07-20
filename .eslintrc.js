@@ -1,13 +1,17 @@
 module.exports = {
 	root: true,
+
 	extends: [
 		"airbnb-base",
+		"plugin:vue/essential"
 	],
+
 	rules: {
-		// Using tab
-		"indent": ["error", "tab"],
-		"no-tabs": 0,
-		// Ignore unresolved imports in template files
+		indent: [
+			'error',
+			'tab'
+		],
+		'no-tabs': 0,
 		'import/no-unresolved': [
 			2,
 			{
@@ -15,8 +19,18 @@ module.exports = {
 					'^rollup-plugin*',
 					'^./components',
 					'^./<%-componentName%>.vue'
-				],
-			},
+				]
+			}
 		],
+		'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+		'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
 	},
+
+	env: {
+		node: true
+	},
+
+	parserOptions: {
+		ecmaVersion: 2020
+	}
 };
