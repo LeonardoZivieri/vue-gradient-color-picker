@@ -30,6 +30,7 @@
 					:key="i"
 					:style="{'--color': c.color, '--percent': c.percent+'%'}"
 					@click.stop="openColorInput( $event, $refs['colorInput'][i] )"
+					@mousedown="mousedown( $event, c )"
 					@dblclick.stop=""
 					@contextmenu.prevent="removeColor( i )"
 				>
@@ -57,6 +58,7 @@ export default {
 					color: '#ffffff',
 				},
 			],
+			movingColor: null,
 		};
 	},
 	computed: {
@@ -95,6 +97,38 @@ export default {
 			colorInputStyles.left = `calc(${event.x}px - 5vw)`;
 			colorInputStyles.top = `calc(${event.y}px - 5vh)`;
 			setTimeout(() => colorInput.click(event));
+		},
+		mousedown(event, color) {
+			this.movingColor = color;
+			window.addEventListener(
+				'mouseup',
+				this.mouseup,
+				{
+					once: true,
+				},
+			);
+			window.addEventListener(
+				'mousemove',
+				this.mousemove,
+			);
+		},
+		mousemove(event) {
+			this.colorMove(event);
+		},
+		mouseup(event) {
+			this.colorMove(event);
+			window.removeEventListener(
+				'mousemove',
+				this.mousemove,
+			);
+		},
+		colorMove(event) {
+			if (this.movingColor) {
+				const rect = this.$refs['gradient-color-picker-input-div'].getBoundingClientRect();
+				const x = event.clientX - rect.left; // x position within the element
+				const percent = (100 * x) / rect.width;
+				this.movingColor.percent = Math.max(1, Math.min(percent, 99));
+			}
 		},
 	},
 };
