@@ -5,7 +5,8 @@
 	"author": "Leonardo Zivieri",
 	"homepage": "https://github.com/LeonardoZivieri/vue-gradient-color-picker",
 	"scripts": {
-		"serve": "vue serve --open src/gradient-color-picker.vue",
+		"serve": "vue serve --open src/example.vue",
+		"serve:component": "vue serve --open src/gradient-color-picker.vue",
 		"build": "npm run build:umd & npm run build:es & npm run build:unpkg",
 		"lint": "vue-cli-service lint",
 		"build:es": "rollup --config build/rollup.config.js --format es --file dist/gradient-color-picker.esm.js",
