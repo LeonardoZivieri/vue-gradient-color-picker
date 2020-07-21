@@ -2,13 +2,31 @@
 	<div>
 		<div class="color-inputs">
 			<div class="color-input">
-				<input type="color" v-model="initialColor" ref="initialColorInput">
+				<input
+						type="color"
+						v-model="initialColor"
+						ref="initialColorInput"
+						@change="changeValue"
+						@input="inputValue"
+					>
 			</div>
 			<div class="color-input">
-				<input type="color" v-model="finalColor" ref="finalColorInput">
+				<input
+						type="color"
+						v-model="finalColor"
+						ref="finalColorInput"
+						@change="changeValue"
+						@input="inputValue"
+					>
 			</div>
 			<div class="color-input" v-for="(c, i) of colors" :key="i">
-				<input type="color" v-model="colors[i].color" ref="colorInput">
+				<input
+						type="color"
+						v-model="colors[i].color"
+						ref="colorInput"
+						@change="changeValue"
+						@input="inputValue"
+					>
 			</div>
 		</div>
 		<div
@@ -83,6 +101,13 @@ export default {
 			gradient = `linear-gradient( 90deg, ${gradient} )`;
 			return gradient;
 		},
+		finalGradient() {
+			let gradient = this.allColors;
+			gradient = gradient.map((c) => `${c.color} ${c.percent}%`);
+			gradient = gradient.join(', ');
+			gradient = `linear-gradient( 90deg, ${gradient} )`;
+			return gradient;
+		},
 	},
 	methods: {
 		addColor(event) {
@@ -120,22 +145,39 @@ export default {
 			);
 		},
 		mousemove(event) {
-			this.colorMove(event);
+			this.colorMove(event, 'input');
 		},
 		mouseup(event) {
-			this.colorMove(event);
+			this.colorMove(event, 'change');
 			window.removeEventListener(
 				'mousemove',
 				this.mousemove,
 			);
 		},
-		colorMove(event) {
+		colorMove(event, eventType) {
 			if (this.movingColor) {
 				const rect = this.$refs['gradient-color-picker-input-div'].getBoundingClientRect();
 				const x = event.clientX - rect.left; // x position within the element
-				const percent = (100 * x) / rect.width;
-				this.movingColor.percent = Math.max(1, Math.min(percent, 99));
+				let percent = (100 * x) / rect.width;
+				percent = Math.max(1, Math.min(percent, 99));
+				percent = Math.round(percent * 100) / 100;
+				this.movingColor.percent = percent;
 			}
+			switch (eventType) {
+			case 'change':
+				this.changeValue();
+				break;
+			case 'input':
+				this.inputValue();
+				break;
+			default:
+			}
+		},
+		changeValue() {
+			this.$emit('change', this.finalGradient);
+		},
+		inputValue() {
+			this.$emit('input', this.finalGradient);
 		},
 		registerNewValue(newValue) {
 			let value = newValue.trim().replace(/^linear-gradient\(/, '').replace(/\)$/, '');
