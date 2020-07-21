@@ -7,6 +7,13 @@ module.exports = {
 	],
 
 	rules: {
+		"prefer-destructuring": [
+			"error",
+			{
+				"array": false,
+				"object": true
+			}
+		],
 		indent: [
 			'error',
 			'tab'
