@@ -74,5 +74,12 @@
 			"vue-cli-service lint",
 			"git add"
 		]
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/LeonardoZivieri/vue-gradient-color-picker.git"
+	},
+	"bugs": {
+		"url": "https://github.com/LeonardoZivieri/vue-gradient-color-picker/issues"
 	}
 }
