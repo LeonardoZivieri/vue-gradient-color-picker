@@ -6,7 +6,6 @@
 						type="color"
 						v-model="initialColor"
 						ref="initialColorInput"
-						@change="changeValue"
 						@input="inputValue"
 					>
 			</div>
@@ -15,7 +14,6 @@
 						type="color"
 						v-model="finalColor"
 						ref="finalColorInput"
-						@change="changeValue"
 						@input="inputValue"
 					>
 			</div>
@@ -24,7 +22,6 @@
 						type="color"
 						v-model="colors[i].color"
 						ref="colorInput"
-						@change="changeValue"
 						@input="inputValue"
 					>
 			</div>
@@ -145,16 +142,16 @@ export default {
 			);
 		},
 		mousemove(event) {
-			this.colorMove(event, 'input');
+			this.colorMove(event, false);
 		},
 		mouseup(event) {
-			this.colorMove(event, 'change');
+			this.colorMove(event, true);
 			window.removeEventListener(
 				'mousemove',
 				this.mousemove,
 			);
 		},
-		colorMove(event, eventType) {
+		colorMove(event, trigger) {
 			if (this.movingColor) {
 				const rect = this.$refs['gradient-color-picker-input-div'].getBoundingClientRect();
 				const x = event.clientX - rect.left; // x position within the element
@@ -163,18 +160,7 @@ export default {
 				percent = Math.round(percent * 100) / 100;
 				this.movingColor.percent = percent;
 			}
-			switch (eventType) {
-			case 'change':
-				this.changeValue();
-				break;
-			case 'input':
-				this.inputValue();
-				break;
-			default:
-			}
-		},
-		changeValue() {
-			this.$emit('change', this.finalGradient);
+			if (trigger) this.inputValue();
 		},
 		inputValue() {
 			this.$emit('input', this.finalGradient);
