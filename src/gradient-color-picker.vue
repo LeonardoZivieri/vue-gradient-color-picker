@@ -276,6 +276,11 @@ export default {
 						}
 					}
 				});
+
+				this.colors = this.colors.map(JSON.stringify);
+				this.colors = this.colors.filter((item, pos) => this.colors.indexOf(item) === pos);
+				this.colors = this.colors.map(JSON.parse);
+
 				this.colors = this.colors.sort((c1, c2) => c1.percent - c2.percent);
 				this.initialColor = this.colors.shift().color;
 				this.finalColor = this.colors.pop().color;
