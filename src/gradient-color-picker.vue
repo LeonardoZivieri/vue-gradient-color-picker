@@ -116,10 +116,12 @@ export default {
 				percent,
 				color: '#000',
 			});
+			this.inputValue();
 		},
 		removeColor(index) {
 			this.colors.splice(index, 1);
 			this.$forceUpdate();
+			this.inputValue();
 		},
 		openColorInput(event, colorInput) {
 			const colorInputStyles = colorInput.style;
