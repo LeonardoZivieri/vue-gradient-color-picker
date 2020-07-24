@@ -180,7 +180,7 @@ export default {
 			this.$emit('input', this.finalGradient);
 		},
 		registerNewValue(newValue) {
-			let value = newValue.trim().replace(/^linear-gradient\(/, '').replace(/\)$/, '');
+			let value = newValue.trim().replace(/^linear-gradient\( */, '').replace(/ *\)$/, '');
 
 			const directionPattern = /^((to left|to right|to top|to bottom|[0-9.]+turn|[0-9.]+deg), *)(.*)?/;
 			const directionPatternResult = directionPattern.exec(value);
